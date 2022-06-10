@@ -1,0 +1,164 @@
+---
+layout: default
+---
+
+<style>
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. Make nav sticky */
+container > nav {
+  position: sticky;
+  align-self: start;
+  top: 2rem;
+}
+
+/* Sidebar Navigation */
+.section-nav {
+  padding-right: 0;
+  margin-right: 2rem;
+}
+
+.section-nav a {
+  text-align: right;
+  text-decoration: none;
+  display: block;
+  color: #004aad;
+  width: 8rem;
+}
+
+.section-nav a:hover,
+.section-nav a:focus{
+  color: #85ACDE;
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/** page layout **/
+container {
+  display: flex;
+  flex-direction: row;
+}
+
+</style>
+
+<container>
+  <nav class="section-nav">
+    <ol>
+      <li><a href="#IGRINS">IGRINS</a></li>
+      <li><a href="#RRISA">RRISA</a></li>
+      <li><a href="#cite">Citation</a></li>
+      <li><a href="#review">Referee</a></li>
+      <li><a href="#GMTNIRS">GMTNIRS</a></li>
+    </ol>
+  </nav>
+  <div>
+      <section id="IGRINS">
+        <h1>IGRINS</h1>
+        <p>The Immersion GRating INfrared Spectrometer (IGRINS) is a compact high-resolution
+          near-infrared spectrograph which can cover the entire wavelength range between
+          1.45 and 2.45μm in a single exposure with a resolving power of R~45,000. IGRINS
+          was built in a partnership between the <a href="https://www.utexas.edu/">University of Texas at Austin</a>
+          and the <a href="https://www.kasi.re.kr/eng/index">Korea Astronomy and Space-Science Institute (KASI)</a>
+          with the expectation that it would be deployed to multiple facilities.</p>
+          <center>
+            <figure>
+              <img src="/images/IGRINS_optics.png" alt="The IGRINS optical layout"/>
+              <figcaption>The optical design of IGRINS.</figcaption>
+            </figure>
+          </center>
+          <p>Since commissioning in July 2014, IGRINS has been scheduled for more that 1000 nights combined on the
+          <a href="https://mcdonald.utexas.edu/">2.7m Harlan J. Smith Telescope at McDonald Observatory</a>,
+          the <a href="https://lowell.edu/research/telescopes-and-facilities/ldt/">4.3m Discovery Channel Telescope (now the Lowell Discovery Telescope) at Lowell Observatory</a>,
+          and the <a href="https://www.gemini.edu/">8.1m Gemini South telescope</a>. Lastly, IGRINS is a prototype
+          for the future instrument on the <a href="https://giantmagellan.org/">Giant Magellan Telescope</a>,
+          <a href="https://www.gmt.iag.usp.br/en/projects/gmtnirs">GMTNIRS</a>.</p>
+
+        <p>Check out all of the <a href="https://ui.adsabs.harvard.edu/search/filter_database_fq_database=AND&filter_database_fq_database=database%3A%22astronomy%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=(database%3A%22astronomy%22)&q=IGRINS&sort=date%20desc%2C%20bibcode%20desc&p_=0">science with IGRINS</a>
+          and our curated collection of high SNR spectra in the <a href = "https://ui.adsabs.harvard.edu/abs/2018ApJS..238...29P/abstract">IGRINS Spectral Library</a>!<p>
+      </section>
+      <section id="RRISA">
+        <h1>The Raw & Reduced IGRINS Spectral Archive (RRISA)</h1>
+        <p>As of May 2021, IGRINS has completed almost 12,000 individual observations of both science targets and
+          telluric standards. RRISA features IGRINS data from more than 850 nights on-sky, resulting in 2,800 unique
+          target observations from over 3,000 hours of total science time. RRISA also includes IGRINS observations
+          of >1,200 distinct A0V standard stars. The spatial distribution of the IGRINS observations RRISA
+          currently encompasses are in the following image:<p>
+          <center>
+            <figure>
+              <img src="/images/IGRINS_obs_density.png" alt="IGRINS Observation Density On-Sky"/>
+              <figcaption>Distribution of IGRINS observations (including A0V standards) up to May 2021 plotted in galactic coordinates. The color gradient represents density of unique observations: areas of space where IGRINS has more unique observations are lightest, while darker teal areas have fewer unique observations. The dense region on the lower left of the plot is Taurus, the center dense region is a mix of both Ophiuchus & Upper Scorpius, and the dense region on the lower right is the Orion star forming region.</figcaption>
+            </figure>
+          </center>
+          <p>The Raw component of RRISA includes all of the frames IGRINS observed before May 2021--Flats, Darks, Arcs,
+          Targets & Telluric Standards--in their unedited form. However, we caution that the Raw component of RRISA is exactly
+          that, unedited. Users should not expect all target names to be searchable or coordinates to be correct
+          (particularly for observations at McDonald Observatory). The Reduced component of RRISA includes only the
+          output data products from the IGRINS PipeLine Package (<a href="https://github.com/igrins/plp">IGRINS PLP</a>),
+          names have been tediously cross checked by hand to ensure accuracy, and coordinates are corrected when SIMBAD
+          counterparts are available. The XMatch component of RRISA includes information to access the IGRINS reduced data
+          products as well as additional information provided from a few surveys for some of the targets. For more detail on
+          each component of RRISA check out the corresponding tabs
+          above!</p>
+      </section>
+      <section id="cite">
+        <h1>Required Citation</h1>
+        <p>We <em><strong>ask</strong></em> that users of RRISA & IGRINS <em><strong>cite</strong></em> the following
+        instrumentation papers when referencing IGRINS:</p>
+        <ul>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2010SPIE.7735E..1MY/abstract">Yuk+ 2010</a>: <em>Preliminary design of IGRINS (Immersion GRating INfrared Spectrograph)</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2010SPIE.7739E..4LW/abstract">Wang+ 2010</a>: <em>Manufacturing of silicon immersion gratings for infrared spectrometers</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8450E..2SG/abstract">Gully-Santiago+ 2012</a>: <em>Near-infrared metrology of high-performance silicon immersion gratings</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8450E..48M/abstract">Moon+ 2012</a>: <em>Immersion grating mount design for IGRINS and GMTNIRS</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8550E..1BH/abstract">Han+ 2012</a>: <em>Alignment based on a no adjustment philosophy for the Immersion Grating Infrared Spectrometer (IGRINS)</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..1DP/abstract">Park+ 2014</a>: <em>Design and early performance of IGRINS (Immersion Grating Infrared Spectrometer)</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..39O/abstract">Oh+ 2014</a>: <em>Mechanical design of mounts for IGRINS focal plane arrays and field flattening lenses</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9154E..1XJ/abstract">Jeong+ 2014</a>: <em>Characterization and optimization for detector systems of IGRINS</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2016SPIE.9908E..0CM/abstract">Mace+ 2016</a>: <em>300 nights of science with IGRINS at McDonald Observatory</em></li>
+          <li> <a href="https://ui.adsabs.harvard.edu/abs/2018SPIE10702E..0QM/abstract">Mace+ 2018</a>: <em>IGRINS at the Discovery Channel Telescope and Gemini South</em></li>
+        </ul>
+        <p>If you use any <em><strong>reduced data products</strong></em> be sure to <em><strong>cite</strong></em>
+           the IGRINS PLP: <a href="https://ui.adsabs.harvard.edu/abs/2017zndo....845059L/abstract">Lee+ 2017</a></p>
+        <p>The standard acknowledgement for IGRINS <em><strong>must</strong></em> be in every publication using IGRINS data:</p>
+        <blockquote>
+            “This work used The Immersion Grating Infrared Spectrometer (IGRINS) was developed under a collaboration between
+            the University of Texas at Austin and the Korea Astronomy and Space Science Institute (KASI) with the financial
+            support of the US National Science Foundation under grants AST-1229522, AST-1702267 and AST-1908892, McDonald
+            Observatory of the University of Texas at Austin, the Korean GMT Project of KASI, the Mt. Cuba Astronomical
+            Foundation and Gemini Observatory."
+        </blockquote>
+      </section>
+      <section id="review">
+        <h1>Internal Referee</h1>
+        <p><em><strong>Authors should inform the IGRINS team of the submission of all papers, refereed and non-refereed, at the time of
+          acceptance, giving the title, journal, volume, and author list. This allows us to track instrument use for grant
+          requirements.</strong></em></p>
+        <p>The IGRINS team has an internal refereeing process for observing and instrumentation papers. <strong>Since we verify the representation
+          and use of IGRINS in all published papers</strong>, it is in the best interest of the author to provide us with a copy at submission in
+          order to ensure that the above guidelines have been followed. We strongly recommend that all papers to be submitted to a refereed
+          journal that using IGRINS data or technical information go through the IGRINS internal refereeing process. Papers for non-refereed
+          conference proceedings may also make use of this service. First authors should submit papers that are ready for publication directly
+          to igrins.contact [at] gmail.com for comment. Revisions in response to these comments can be made at the discretion of the authors.</p>
+      </section>
+      <section id="GMTNIRS">
+        <h1>GMTNIRS</h1>
+        We also <em>invite</em> users to check out the following papers on IGRINS' successor, GMTNIRS:
+        <ul>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2006SPIE.6269E..4IJ/abstract">Jaffe+ 2006</a>: <em>GMTNIRS: the high resolution near-IR spectrograph for the Giant Magellan Telescope</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2010SPIE.7735E..2KL/abstract">Lee+ 2010</a>: <em>GMTNIRS (Giant Magellan Telescope near-infrared spectrograph): design concept</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8446E..69B/abstract">Beets+ 2012</a>: <em>GMTNIRS mechanical design</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..22J/abstract">Jaffe+ 2014</a>: <em>GMTNIRS (Giant Magellan Telescope Near-Infrared Spectrograph): optimizing the design for maximum science productivity and minimum risk</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..1YJ/abstract">Jacoby+ 2014</a>: <em>Status of the instrumentation program for the Giant Magellan Telescope</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2016SPIE.9908E..1UJ/abstract">Jacoby+ 2016</a>: <em>Instrumentation progress at the Giant Magellan Telescope project</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2016SPIE.9908E..21J/abstract">Jaffe+ 2016</a>: <em>GMTNIRS: progress toward the Giant Magellan Telescope near-infrared spectrograph</em></li>
+          <li><a href="https://ui.adsabs.harvard.edu/abs/2018SPIE10706E..24K/abstract">Kidder+ 2018</a>: <em>Manufacturing silicon immersion gratings on 150-mm material</em></li>
+        </ul>
+      </section>
+  </div>
+</container>
