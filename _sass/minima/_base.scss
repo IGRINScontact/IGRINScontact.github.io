@@ -148,27 +148,30 @@ blockquote {
 /**
  * Code formatting
 */
-pre,
 code {
-  @include relative-font-size(0.9375);
-  border: 1px solid $navy-color-light;
-  border-radius: 3px;
-  background-color: $sky-color;
-}
-
-code {
+  display: block;
   padding: 1px 5px;
 }
 
 pre {
+  display: block;
   padding: 0px 0px;
   overflow-x: auto;
+  width: 55vw;
 
   > code {
     border: 0;
     padding-right: 0;
     padding-left: 0;
   }
+}
+
+pre,
+code {
+  @include relative-font-size(0.9375);
+  border: 1px solid $navy-color-light;
+  border-radius: 3px;
+  background-color: $sky-color;
 }
 
 
@@ -180,7 +183,6 @@ pre {
   max-width:         calc(#{$content-width} - (#{$spacing-unit} / 10));
   max-width: -webkit-calc(#{$content-width});
   max-width:         calc(#{$content-width});*/
-  max-width: $content-width;
   max-width: $content-width;
   margin-right: auto;
   margin-left: auto;
