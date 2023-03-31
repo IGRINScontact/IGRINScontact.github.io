@@ -8,7 +8,7 @@ permalink: /RRISA_raw/
 ---
 
 <h1>Raw IGRINS Files</h1>
-The Raw component of RRISA includes all of the frames IGRINS has ever observed before May 2021 including Flats, Darks, Arcs, Targets, and Telluric Standards.
+The Raw component of RRISA includes all of the frames IGRINS has ever observed before December 2021 including Flats, Darks, Arcs, Targets, and Telluric Standards.
 Additionally, this includes the slit-viewer images from acquisition and guiding.
 Some spectral files are not suitable for science. For example - exposures interrupted by weather, frames with incorrect exposure times, or mislabeled frames.
 RRISA includes all of the night logs (digital and paper) for all of the IGRINS observations.
@@ -37,6 +37,6 @@ __*Note:*__ _Data acquired between April 2018 and May 2019 was impacted by a sli
 
 <h3>RRISA Raw</h3>
 
-Downloadable from [our GitHub](https://github.com/IGRINScontact/RRISA.git) as a .csv or .xlsx. Users can also view through [Google Drive](https://docs.google.com/spreadsheets/d/1jqbt4-Qqula0TP_iJfw7BqiYPfOMnCWdc5JiovziYp0/edit?usp=sharing) or [explore the RRISA_v0 folder on Box](https://utexas.box.com/v/RRISA-v0-July2014-May2021)!
+Downloadable from [our GitHub](https://github.com/IGRINScontact/RRISA.git) as a .csv or .xlsx. Users can also view through [Google Drive](https://docs.google.com/spreadsheets/d/1vx1Q8uzG1Q4SKmy5CooozlowYTVSUYnRG3vC3SUxdrc/edit?usp=sharing) or [explore the RRISA_v1 folder on Box](https://utexas.box.com/s/w3i7rya83lmgkiqkg79w85b7wrra90m5)!
 
 For a more detailed description of the Raw RRISA header, check out the readme.md in the RRISA Raw folder on [our GitHub](https://github.com/IGRINScontact/RRISA.git).

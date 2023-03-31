@@ -8,5 +8,5 @@ layout: page
 ![RRISA Logo](images/IGRINS_and_RRISA.png){:style="display:block; margin-left:auto; margin-right:auto; width:600px"}
 
 <center>
-<h1> RRISA Beta: July 2014-May 2021 </h1>
+<h1> RRISA v1: July 2014-December 2021 </h1>
 </center>

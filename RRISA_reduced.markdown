@@ -63,7 +63,35 @@ __*Note:*__ _The output files from the IGRINS PLP are an in vacuum wavelength so
 <em>AIR = VAC / (1.0 + 2.735182E-4 + (131.4182 / VAC^2) + (2.76249E8 / VAC^4))</em>
 </center>
 
+<h3><b>New in RRISA v1: Rtell Data Products & File Format</b></h3>
+
+<center>
+  <figure>
+    <img src="/images/SZ_Cha_rtell.png" alt="A comparison between the original IGRINS data product and the rtell IGRINS data product for SZ Cha."/>
+    <figcaption>A comparison between the SZ Cha IGRINS spectrum from the IGRINS PLP and from rtell. The IGRINS PLP spectrum is shown in black and the rtell spectrum is shown in red.</figcaption>
+  </figure>
+</center>
+
+The rtell data products take the original reduced spectra output from the IGRINS PLP and improve the pixel alignment between the A0V standard star spectrum and the target spectrum using a strong telluric sky line (between 16452-16458 and 21740-21752 Angstroms in H- and K-Band respectively) featured in the spectra.
+We identify the center of the telluric feature in both the standard and target spectra by fitting a gaussian.
+The shift between the two centers is identified and the standard star spectrum is shifted in pixel space to align with the center of the target spectrum.
+The rtell spectrum is produced by dividing the original target spectrum by the shifted standard spectrum and multiplying by the Vega model.
+Unlike the IGRINS PLP data products, the divided spectrum, wavelength solution, target spectrum, shifted standard spectrum, Vega model, and SNR per resolution element are available in one FITS file as separate extensions.
+Additionally, when an rtell file is available for an object, we provide three additional files in RRISA:
+1. plots showing the initial sky-line gaussian guess and the final gaussian fit for the telluric line in the target spectrum
+2. plots showing the initial sky-line gaussian guess and the final gaussian fit for the telluric line in the standard spectrum (see Figure below)
+3. a text file with information about both the target and standard spectrum, the shift implemented, and the filename for the rtell spectrum
+
+<center>
+  <figure>
+    <img src="/images/SZ_Cha_standard.png" alt="The standard star spectrum telluric line fits for an SZ Cha rtell file."/>
+    <figcaption>The K-Band telluric feature fits for a standard star used in an SZ Cha IGRINS rtell reduction. The right shows the 'close' initial priors fed into scipy.curve_fit, the left shows the final gaussian from scipy.curve_fit with the center pixel labeled in the legend.</figcaption>
+  </figure>
+</center>
+
+The new rtell file is supported through the most recent version of [muler](https://github.com/OttoStruve/muler) and we provide the code that produces the rtell data products for reference in the rtell folder in the RRISA repository.
+
 <h3>RRISA Reduced</h3>
-Downloadable from [our GitHub](https://github.com/IGRINScontact/RRISA.git) as a .csv or .xlsx. Users can also view through [Google Drive](https://docs.google.com/spreadsheets/d/1RCxGboICnKQeD1suKG6CeGgSrZLGFYbiuVFF_uxNbUg/edit?usp=sharing) or [explore the RRISA_v0 folder on Box](https://utexas.box.com/v/RRISA-v0-July2014-May2021)!!
+Downloadable from [our GitHub](https://github.com/IGRINScontact/RRISA.git) as a .csv or .xlsx. Users can also view through [Google Drive](https://docs.google.com/spreadsheets/d/1YCMcOLvrxI5PySSppOgzXbYDmcKILH3gBNdqiyBODn0/edit?usp=sharing) or [explore the RRISA_v1 folder on Box](https://utexas.box.com/s/w3i7rya83lmgkiqkg79w85b7wrra90m5)!
 
 For a more detailed description of the Reduced RRISA header, check out the readme.md in the RRISA Reduced folder on [our GitHub](https://github.com/IGRINScontact/RRISA.git).
