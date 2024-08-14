@@ -8,10 +8,10 @@ permalink: /RRISA_raw/
 ---
 
 <h1>Raw IGRINS Files</h1>
-The Raw component of RRISA is a list of all of the H-band frames (SDCH_[YYYYMMDD]_[frameno].fits) IGRINS has ever observed before May 2023 including flats, darks, arcs, targets, and telluric standards.
-IGRINS takes H- and K-band spectra simultaneously, so each of the logged H-band frames will have K-band (SDCK_[YYYYMMDD]_[frameno].fits) companion with an identical file number.
+The Raw component of RRISA is a list of all of the H-band frames (SDCH\_[YYYYMMDD]\_[frameno].fits) IGRINS has ever observed before May 2023 including flats, darks, arcs, targets, and telluric standards.
+IGRINS takes H- and K-band spectra simultaneously, so each of the logged H-band frames will have K-band (SDCK\_[YYYYMMDD]\_[frameno].fits) companion with an identical file number.
 The link corresponding to each file number will take users to a UT Box folder with all of the raw files taken on a given night which can be downloaded individually by file number or for the entire night.
-Silt-viewer camera images (SDCS_[YYYYMMDD]_[frameno].fits) for acquisition and guiding are not currently avalible for download through RRISA.
+Silt-viewer camera images (SDCS\_[YYYYMMDD]\_[frameno].fits) for acquisition and guiding are not currently avalible for download through RRISA.
 If a user would like to obtain the slit-viewer camera images for a particular night they can reach out to the IGRINS team directly.
 *Please note that the slit-viewer camera images are not appropriate for photometry.*
 
