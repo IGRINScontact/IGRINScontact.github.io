@@ -150,14 +150,14 @@ blockquote {
 */
 code {
   display: block;
-  padding: 1px 5px;
+  padding: 1px 1px;
 }
 
 pre {
   display: block;
   padding: 0px 0px;
-  overflow-x: auto;
   width: 55vw;
+  overflow-x: auto;
 
   > code {
     border: 0;

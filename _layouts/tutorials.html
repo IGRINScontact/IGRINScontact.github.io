@@ -64,17 +64,18 @@ hr {
     <ol>
       <li><a href="#RRISA">RRISA Access</a></li>
       <li><a href="#box">Quickstart</a></li>
-      <li><a href="#plp">IGRINS plp</a></li>
       <li><a href="#muler">Quick Look</a></li>
+      <li><a href="#plp">IGRINS PLP v3</a></li>
+      <li><a href="#trouble-shoot">Telluric Residuals</a></li>
     </ol>
   </nav>
   <div>
     <section id= "RRISA">
       <h2>RRISA Access</h2>
       <p>All of the IGRINS data is stored using Box. RRISA holds all of the download links
-        you'll need to access any of the IGRINS data products. We support access through of RRISA through
+        you'll need to access any of the IGRINS data products. We support access to RRISA through
         Python and provide tutorials for users to follow. We recommend that users install <a href = "https://www.anaconda.com/">Anaconda</a>,
-        a Python distributor and Python package manager. Direcitons for installing Anaconda on various operating
+        a Python distributor and Python package manager. Directions for installing Anaconda on various operating
         systems can be found <a href="https://docs.anaconda.com/anaconda/install/">here</a>. Finally, we
         suggest that users seperate projects that use drastically different packages by utilizing
         <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">environments</a>.
@@ -106,168 +107,239 @@ hr {
 xmatch_superlog = pd.read_csv('../RRISA_XMatch/xmatch_log.csv')
 </code></pre>
       <h3>Downloading IGRINS Data Products</h3>
-      <p>All of the values in the columns containing the download URLs are strings. We can easily convert
-      strings back into dictionaries (filename-url pairs) using the ast package. After, we use the requests
-      package to query the links for each file and download the content.</p>
+      <p>RRISA v3 structure is a little different than past versions of RRISA in terms of how download links are connected with file names. Instead of all the indvidual output files from the PLP having their own download link, each reduced file number (in RRISA Reduced or XMatch) is connected with a download link to a zipped file containing several output files from the PLP. To see all of the files included in the zipped file check out the <a href = "https://igrinscontact.github.io/RRISA_reduced/">RRISA Reduced</a> page.</p>
+      <p>The 'FILE_URL' column in RRISA Reduced and XMatch holds the download link to the zip file for a particular file name (found in the 'FILENAME' column). All of the values in the 'FILE_URL' column are strings (URL links) that we can use to download zip files using Python. If you wanted to download a single zip file from UT Box using RRISA you can use the <a href = "https://requests.readthedocs.io/en/latest/">requests package</a>. In the following example we download the first file in RRISA XMatch:</p>
 <pre><code class="python">import requests
-import ast
-#example dictionary with filename-url pairs
-test_dict = ast.literal_eval(xmatch_superlog['URLS_H'].iloc[0])
-</code></pre>
-      <figure>
-        <img src="../images/dictionary_example.png" alt="An example output dictionary that holds the download URLs.">
-      </figure>
-      <p>Here is an example of downloading one file from the above dictionary using the requests package.</p>
-<pre><code class="python">#using a session here means that requests can fetch the information faster
-#since the connection is reused
+#example file name
+#here we are adjusting the file name so it no longer has the .fits extension attached to it
+file_name = (xmatch_superlog['FILENAME'].iloc[0]).split('.')[0]
+#download link for file name
+download_link = xmatch_superlog['FILE_URL'].iloc[0]
+
+#start a requests session (allows you to download multiple files at once)
 session = requests.Session()
-#the response holds lots of information gathered from the request (session.get())
-response = session.get(test_dict['20170915/SDCH_20170915_0049.spec_a0v.fits'])
-#we can check the status code to make sure our link was found successfully
+#get information from the website (from the link we pass) by making a response object
+response = session.get(download_link)
+
+#we can check the status code to make sure our link was found succssfully
 if response.status_code == 200:
-  #open a file with the corresponding filename to dump the file content into
-  with open("SDCH_20170915_0049.spec_a0v.fits", 'wb') as f:
+  #open a file on your computer to dump the file content from 
+  with open(f"/path/to/directory/where/you/want/to/save/file/{file_name}.tar.gz", 'wb') as f:
     #write the file
     f.write(response.content)
-  #close the file--especially important when writing many files at once or
-  #trying to prevent against corrupted files
+  #close the file--very important when writing multiple files at once!
   f.close()
-  #print that we downloaded the file
-  print(f"Downloaded SDCH_20170915_0049.spec_a0v.fits")
+  #print where the file was downloaded to
+  print(f"Successfully downloaded {file_name} to {/path/to/directory/where/you/want/to/save/file/}.")
 </code></pre>
-      <p>A more detailed example for multiple file downloads can be found in the full Quickstart tutorial on our
-      <a href = "https://github.com/IGRINScontact/RRISA">GitHub</a>.</p>
+      <p>You can also unzip the zip files using Python immediatly after downloading them instead of doing it manually using the following example:</p>
+<pre><code class="python">import shutil
+#the unpack_archive function automatically detects the compression format of the zip file
+#the second argument for the function here is the directory name for the unzipped file, we are just using the file name
+shutil.unpack_archive(f"/path/to/directory/where/you/want/to/save/file/{file_name}.tar.gz", file_name)
+</code></pre>
+      <p>A more detailed example for multiple file downloads (e.g. all the reduced files for a particular night) can be found in the full Quickstart tutorial on our <a href = "https://github.com/IGRINScontact/RRISA">GitHub</a>.</p>
       <h3>DataFrame Manipulation</h3>
       <p>We can find the highest signal to noise spectra for each object using only a few lines of code.
-      First we sort the DataFrame using the 'SNRH' column from highest to lowest value and then we drop all of
+      First we sort the DataFrame using the 'SNRH_pix' column from highest to lowest value and then we drop all of
       the rows that have a repeat object name. When we keep the first occurance of each object name then we get
-      the highest SNR H band observation for each object!</p>
+      the highest SNR H-band observation (measured per pixel) for each object.</p>
 <pre><code class = "python">#sort H band SNR from highest to lowest
-xmatch_superlog.sort_values(by=['SNRH'], ascending = False, inplace = True)
+xmatch_superlog.sort_values(by=['SNRH_pix'], ascending = False, inplace = True)
 #drop all but the first occurance of each object name
 xmatch_superlog.drop_duplicates(subset = ['MAIN_ID'], keep = 'first', inplace = True)
 </code></pre>
-      <p>We can also set limits on specific values. In this example we require that the SNR in the H band is
+      <p>We can also set limits on specific values. In this example we require that the SNR in the H-band (measured per pixel) is
       higher than 150.</p>
-<pre><code class = "python">#make a new DataFrame where the SNR H band spectra is greater than or equal to 150
-subset = xmatch_superlog[xmatch_superlog['SNRH'] >= 150.]
+<pre><code class = "python">#make a new DataFrame where the SNR H-band (measured per resolution element) spectra is greater than or equal to 150
+subset = xmatch_superlog[xmatch_superlog['SNRH_res'] >= 150.]
 </code></pre>
-      <p>We can also search for substrings within the possible identifiers for objects with SIMBAD counterparts.
-      Here is an example that shows how to search for the substring "Tau" within the SIMBAD identfiers.</p>
+      <p>SIMBAD provides not only a primary identifier for all of the objects, but a list of all identfiers (with some caveats) for each object. If we are looking for a particular object, but we arent sure the name we have is the primary identifier for the object, we can search the 'IDS' column for our object name. Here is an example of how you would search for objects with "Tau" in the name. <i>Note: this type of searching is case sensitive!</i></p>
 <pre><code class = "python">#it is important to convert the Series (subset['IDS']) into a string (.astype(str))
 #so that way we do not get any errors from NaN values within the IDS column
 subset_tau = subset[subset['IDS'].astype('str').str.contains('Tau')]
 </code></pre>
-      <p>Finally, we can select specifically targets using: </p>
+      <p>Using the 'OBJTYPE' column we can select between targets and standard stars. To select specifically targets you can use the following code:</p>
 <pre><code class = "python">#only keep TAR OBJTYPEs
 targets_tau = subset_tau[subset_tau['OBJTYPE'].astype('str').str.contains('TAR')]
 </code></pre>
-      <p>We can also filter by coordinates, but that process is more complicated and will be covered
-      in a specific tutorial.</p>
+      <p>There are many different ways to pull out subsamples using RRISA, this is only one small example! By cross-matching IGRINS data with different catalogs we hope that users will be able to pull out subsamples of interest easier.</p>
       </section>
-<hr>
-      <section id="plp">
-      <h2>Reduce Raw IGRINS Spectra Using The IGRINS PipeLine Package (IGRINS plp)</h2>
-      <h3>Installation</h3>
-      <p>The installation and methods of the IGRINS Pipeline Package (PLP) are detailed in the
-        <a href = "https://github.com/igrins/plp/wiki/How-to-run-pipeline">PLP Github wiki</a>.
-      The most recent version is V2.2 and it runs using Python 2.7. To manage your Python environments
-      we recommend <a href = "https://docs.anaconda.com/anaconda/install/">installing Anaconda</a>.
-      Once Anaconda is installed, follow these steps to create a PLP environment:</p>
-<pre><code class = "shell">> conda create -n igr-pipe python=2.7
-> source activate igr-pipe
-> conda install numpy scipy astropy matplotlib pandas jinja2
-> pip install stsci.image==2.2.0.dev0
-</code></pre>
-      <p><a href="https://github.com/igrins/plp/releases">Download the latest version of the PLP</a> and
-      place in a convient location (e.g. in your root folder or on your Desktop).</p>
-      <h3>Running the PLP</h3>
-      <p>Open a new terminal window and cd to the PLP folder. While there are numerous options
-      within the PLP reduction, the RRISA reduced data have been created using the following commands:</p>
-      <p>1. Activate the conda environment for the PLP</p>
-<pre><code class = "shell">> source activate igr-pipe</code></pre>
-      <p>2. Define the UT date for the data reduction. The raw data should be located in indata folder of PLP.</p>
-<pre><code class = "shell">> UTDATE=20210105</code></pre>
-      <p>3. Create a recipe log file which must be edited. </p>
-<pre><code class = "shell">> python igr_pipe.py prepare-recipe-logs $UTDATE --populate-group1</code></pre>
-      <p>The recipe file is compiled from the '.txt' log produced each night. If mistakes were made while
-        observing, then they will persist in the recipe file. You need to review the recipe file for the file
-        numbers and matching 'A B B A' sequences. The PLP requires FLATS (ON/OFF), SKY, TAR, and STD files for
-        a full reduction of the data. Group1 in each row of the recipe identifies the OBSID - the first file in
-        the observing sequence. Those numbers must match. Group2 in each row is set to '1' by default, but should
-        be changed to match the OBSID of the telluric standard. An example recipe file looks like: </p>
-<pre><code class = 'shell'>OBJNAME, OBJTYPE, GROUP1, GROUP2, EXPTIME, RECIPE, OBSIDS, FRAMETYPES
-FLAT, FLAT, 1, 1, 40.000000, FLAT, 1 2 3 4 5 11 12 13 14 15, OFF OFF OFF OFF OFF ON ON ON ON ON
-G162-44, TAR, 26, 21, 120.000000, STELLAR_AB, 26 27, A B
-HIP 38722, STD, 21, 1, 3.000000, A0V_AB, 21 22 23 24, A B B A
-SKY, TAR, 85, 1, 300.000000, SKY, 85, A
-</code></pre>
-        <p>4. Perform the reduction sequence for each recipe in the recipe file</p>
-<pre><code class = "bash">for RECIPE in flat register-sky sky-wvlsol a0v-ab a0v-onoff stellar-ab extended-ab
-extended-onoff stellar-onoff tell-wvsol
-do python igr_pipe.py $RECIPE $UTDATE
-  rc=$?
-  if [ $rc != "0" ]; then
-    exit $rc
-  fi
-done
-</code></pre>
-      <p>5. Perform the telluric correction</p>
-<pre><code class = "shell">> python igr_pipe.py divide-a0v $UTDATE --a0v=GROUP2</code></pre>
-      <p>We have provided recipe files for every night of reduced data. Please see the Reduced RRISA page for
-        details of the PLP output.</p>
-      </section>
-      <hr>
+    <hr>
       <section id="muler">
         <h2>Quick-Look IGRINS Spectra Using muler</h2>
         <p><a href="https://muler.readthedocs.io/en/latest/">muler</a> is an open-source community-developed
         Python package for analysis of data from echelle spectrographs. muler makes it easy to look at reduced
         IGRINS data!
         </p>
-        <p> muler has a very detailed and easy to follow <a href="https://muler.readthedocs.io/en/latest/install.html">installation page</a>.
-        It is important to make sure when installing muler through conda or pip that the package version is >= 0.3.3,
-        other versions have installation dependency issues that will prevent certain functions from working properly.
-        More importantly, muler must be installed in a Python 3.8 or greater environment. An environment with a specific
-        Python version can be created using the following in the terminal:
-        </p>
-<pre><code class = "shell">> conda create -n env_name python=3.8</code></pre>
-        <p> muler has excellent <a href="https://muler.readthedocs.io/en/latest/tutorials/index.html">documentation and tutorials</a> which
-          we highly recommend consulting when using RRISA. Any questions, bugs, or feature requests can be posted
+        <p> muler has a very detailed and easy to follow <a href="https://muler.readthedocs.io/en/latest/install.html">installation page</a>. As well as extensive <a href="https://muler.readthedocs.io/en/latest/tutorials/index.html">documentation and tutorials</a> which we highly recommend consulting when using RRISA. Both the the new and the old .spec_a0v.fits file format are compatible with the most recent version of muler. Any questions, bugs, or feature requests can be posted
           to the <a href="https://github.com/OttoStruve/muler/">muler GitHub</a>.
         </p>
+        <h3>Plotting 1D Reduced Telluric Corrected Spectra (.spec_a0v.fits)</h3>
         <p>
-        The following tutorial quickly walks through how to read files downloaded using RRISA into muler for viewing.
-        There are two ways to read in an IGRINS spectrum: an entire band at once or one order in a band at a time. To read
+        The following tutorial quickly walks through how to plot the highest SNRK (in pixels) target spectrum in RRISA. There are two ways to read in an IGRINS spectrum: an entire band at once or one order in a band at a time. To read
         in all of the orders at once we can use the IGRINSSpectrumList class:
         </p>
 <pre><code class = "python">from muler.igrins import IGRINSSpectrumList
-#H Band spectra file path (in this directory the .sn file also exists) having a .sn file
-#with the corresponding file number in the same directory is a requirement of muler
-path_H = '20160227/21_Tau/SDCH_20160227_0041.spec_a0v.fits'
-#read in the H band spectrum
-spec_list = IGRINSSpectrumList.read(path_H)
-#plot the spectrum!
-spec_list.remove_nans().trim_edges().normalize().plot(color=None, ylo=0, yhi=5)
+import pandas as pd
+#path to where the cross-matched log is located
+xmatch_path = '/path/to/xmatch_log.csv'
+#read in the cross-matched log using pandas
+xmatch_log = pd.read_csv(xmatch_path)
+
+#sort the log so the highest values of SNRK are at the top of the list
+xmatch_log.sort_values(by = ['SNRK_pix'], ascending = False, inplace = True)
+#remove any objects that appear multiple times
+xmatch_log.drop_duplicates(subset = ['MAIN_ID'], keep = 'first', inplace = True)
+#remove standard star entries (they will not have .spec_a0v.fits files)
+xmatch_log = xmatch_log[xmatch_log['OBJTYPE'] == 'TAR']
+
+#grab the filename
+fn = xmatch_log['FILENAME'].iloc[0]
+
+#the path to the data you want to plot
+outdata_path = '/path/to/data/'
+
+#the path to the file we want to plot
+#Note: all of the names in 'FILENAME' are H band (.fits) so we alter the name to a real output file
+file_path = f"{outdata_path}{(fn.split('.')[0]).replace('H', 'K')}.spec_a0v.fits"
+
+#read in all the orders of K-band using IGRINSSpectrumList
+spec_list = IGRINSSpectrumList.read(file_path)
+
+#plot the entire K-band order using muler
+#the .trim_overlap function trims the edges of the orders so they do not overlap
+spec_list.trim_overlap(pivot = 0.85).plot(color = '#004aad')
 </code></pre>
       <figure>
-          <img src="../images/h_band_spec.png" alt="An H-Band IGRINS spectra plotted with muler.">
+          <img src="../images/full_spec.png" alt="A K-Band IGRINS spectra plotted with muler.">
       </figure>
       <p>
-      To only read in one order at a time we can use the IGRINSSpectrum class:
+      At first look this spectra doesn't look very high signal-to-noise at all! Let's plot three orders in the CO-band region to look closer at the spectra. I've included some facier plotting here just to demonstrate how you can add muler spectra to matplotlib axes to manipulate the visual output better:
       </p>
-<pre><code class = "python">from muler.igrins import IGRINSSpectrum
-#read in a specific H Band order from the spectrum file
-order = IGRINSSpectrum(file=path_H, order = 21)
-#plot the order!
-order.remove_nans().trim_edges().normalize().plot(color=None, ylo=0.8, yhi=1.2)
+<pre><code class = "python">import matplotlib.pylab as plt
+#this will change the fontsize of the x- and y-tick labels
+plt.rc('xtick', labelsize = 14)
+plt.rc('ytick', labelsize = 14)
+
+#select our orders to plot
+orders = [18, 19, 20]
+
+#generate the figure and axes to plot on
+fig, axes = plt.subplots(3, 1, figsize = (20, 15), facecolor = 'white')
+
+#initalized so we can move through our list of axes
+i = 0
+#for each order of interest
+for order in orders:
+    #plot a normalized, trimmed order to a particular axis on the plot
+    spec_list[order].normalize().trim_edges().plot(color = '#004aad', ax = axes[i])
+    #add an order label in the top left hand corner of the plot
+    axes[i].text(0.006,0.905, f'{order}', transform = axes[i].transAxes, c = 'white', fontsize = 20, ma = 'center',
+                 bbox = dict(facecolor='k', edgecolor='k'))
+    #add one to the iteration so we move to the next plot axis
+    i += 1
+
+#add axes labels for x and y
+axes[1].set_ylabel('Flux', fontsize = 20)
+axes[-1].set_xlabel(r'Wavelength [$\AA$]', fontsize = 20)
 </code></pre>
       <figure>
-        <img src="../images/h_band_order.png" alt="An H-Band IGRINS order plotted with muler.">
+        <img src="../images/CO_band.png" alt="Orders 18-20 of the above plot showing some of the CO band in K-band.">
       </figure>
-      <p>
-      A more detailed tutorial, including how to stitch H and K band spectra together can be found in the Tutorials
-      folder on our GitHub (<a href="https://muler.readthedocs.io/en/latest/tutorials/index.html">and in the muler docs!</a>).
-      </p>
+      <p><i>Note: Use the .normalize() function with caution! Sometimes if the median values are close to 0 in an order the normalizing factor will become negative, flipping the spectra so emission looks like absorption (or vice versa). We always recommend plotting your orders un-normalized first to verify the direction of the lines.</i></p>
+      <p>We can see that the spectrum is very clean and has a strong CO in absportion! IGRINS spectra contain many lines, so quick-looking an entire band in one plot can make the data look messier than it actually is. We always recommend plotting order by order when looking for specific features or if you are worried about telluric residual presence.</p>
       </section>
-  </div>
+  <hr>
+      <section id="plp">
+      <h2>Reduce Raw IGRINS Data Using The IGRINS Pipeline Package v3</h2>
+      <h3>Installation</h3>
+      <p>There are now comprehensive instructions for how to install the Python 3 compatible version of the IGRINS PLP (v3) are avalible on the <a href = "https://github.com/igrins/plp/wiki/How-to-Install">IGRINS PLP GitHub</a>. Once the PLP v3 is installed you can download a night of raw IGRINS data using the links provided in the "RAW_URL" column in RRISA Raw, Reduced or XMatch. It is <u>not</u> possible to download a full night of data via Python using the links provided in RRISA Raw. Instead users will have to input the link into a browser and download the folder by selecting the three dot icon on the top right side of the page and selecting "Download". <i>Note: All of the data products included in RRISA Raw are reduced using the IGRINS PLP v3.</i></p>
+      <h3>Creating Recipe Logs</h3>
+      <p>The IGRINS PLP v3 directions also include a <a href = "https://github.com/igrins/plp/wiki/How-to-prepare-recipe-logs">section</a> on crafting the recipe files used to reduce data. Recipe files are created on a per night basis and help the pipeline identify which file numbers belong to which reduction step (along with other acillary information). While the IGRINS PLP v3 has a method for helping users craft recipe logs from the virtual log files (IGRINS_DT_Log_XXXXXXXX_[H,K].txt) from each night, often times the virtual log file will be missing information so users should fill in any missing information by hand. If you are only interested in reducing a single object from a given night, you can comment out other objects.</p>
+      <p>In order to run, the pipeline requires flat frames and sky frames (usually a single 300 second off exposure) for the night. Not all nights of raw data will include a sky exposure, in that case you can use a sky frame from a nearby night (ideally), an OFF frame (sky nod) from a target observation, or a frame from a long exposure of a low signal-to-noise dim target (K > 11 mag). Copy the sky frame(s; both H- and K-band) into the data directory, change the civil date in the file name to match the night of the data to reduce, and update the recipe log with the file number and exposure time of the sky frame. Less frequently nights will be missing the flat frames, in that case you can borrow frames from a nearby night.</p>
+      <p>There are eight columns in a recipe log file: OBJNAME, OBJTYPE, GROUP1, GROUP2, EXPTIME, RECIPE, OBSIDS, and FRAMETYPES. OBJNAME is the name of the object you are reducing for (flats and sky frames use FLAT and SKY). OBJTYPE describes the type of object: TAR, STD, FLAT, ARC, or DARK. GROUP1 is (usually) the first file number in the list of OBSIDs, it will be the file number for the reduced data products. GROUP2 is the GROUP1 for an associated standard you'd like to use in the reduction, if you leave this value as 1 it will default to the nearest standard listed in the recipe log. EXPTIME is the exposure time of each frame in seconds. RECIPE is the type of reduction to perform; options are: FLAT, SKY, AOV_AB, AOV_ONOFF, STELLAR_AB, STELLAR_ONOFF, EXTENDED_AB, or EXTENDED_ONOFF. OBSIDS is the list of file numbers to include in the reduction. FRAMETYPES is the type of frame associated with each OBSID (A/B or ON/OFF). A more detailed explination of each of the columns in the recipe logs and the types of reduction recipes avalible check out the <a href="https://github.com/igrins/plp/wiki/How-to-prepare-recipe-logs">IGRINS PLP v3 wiki</a>.</p>
+      <p>A very simple recipe file example might look like:</p>
+<pre><code class = "shell">OBJNAME, OBJTYPE, GROUP1, GROUP2, EXPTIME, RECIPE, OBSIDS, FRAMETYPES
+#to reduce the flat frames
+FLAT, FLAT, 11, 1, 30.000000, FLAT, 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30, OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF ON ON ON ON ON ON ON ON ON ON
+#to reduce the sky frame(s)
+SKY, TAR, 103, 1, 700.000000, SKY, 103 102, B A
+#target
+KIC 6307537, TAR, 31, 41, 600.000000, STELLAR_AB, 31 32 33 34, A B B A
+#companion standard
+HR  9019 , STD, 41, 1, 100.000000, A0V_AB, 41 42 43 44, A B B A
+#an extended target (like a planet)
+Uranus, TAR, 86, 107, 300.000000, EXTENDED_ONOFF, 86 87 88 89, A B B A
+#companion standard to extended object
+HIP 18717, STD, 107, 1, 6.000000, A0V_AB, 107 108 109 110, A B B A
+</code></pre>
+      <h3>Running the Pipeline</h3>
+      <p>Again, more detailed directions for running the pipeline are included in the <a href = "https://github.com/igrins/plp/wiki/How-to-run-pipeline">IGRINS PLP v3 directions</a>, but we will briefly describe the method here. To run the pipeline you'll need to have installed the pipeline, downloaded the raw data and put it in the the "indata" directory, and generated a recipe_log file for the night put in the "recipe_logs" directory (see above section). Each recipe process can be run by calling the pipeline script (igr_pipe.py) with the appropriate keywords. Below is a shell script (called ruh.sh in the PLP directory) that will run the relevant recipes for a user input date:</p>
+<pre><code class = "shell">#!/bin/bash
+#Simple script to fully run IGRINS PLP on any UTDATE
+echo "Enter UTDATE:" #Prompt user to enter date
+read UTDATE #Get date from user
+
+#Clean up previous files
+rm -r outdata/$UTDATE
+rm -r calib/secondary/$UTDATE
+rm -r calib/primary/$UTDATE
+
+#Run PLP
+python igr_pipe.py flat $UTDATE #Process flat
+python ./igr_pipe.py register-sky $UTDATE #First pass at wavelength solution using sky frame (incase THAR lamps don't exist)
+python ./igr_pipe.py flexure-setup $UTDATE #Setup files needed for flexure correction
+python ./igr_pipe.py wvlsol-sky $UTDATE #Second pass at wavelength solution using OH sky emission
+python ./igr_pipe.py a0v-ab $UTDATE --correct-flexure --mask-cosmics #Reduce A0V standard star data
+python ./igr_pipe.py a0v-onoff $UTDATE --correct-flexure --mask-cosmics
+python ./igr_pipe.py stellar-ab $UTDATE --correct-flexure --height-2dspec=100 --mask-cosmics #Reduce stellar sources nod on slit
+python ./igr_pipe.py stellar-onoff $UTDATE --correct-flexure --height-2dspec=100 --mask-cosmics #Reduce stellar sources nod off 
+slit
+python ./igr_pipe.py extended-ab $UTDATE --correct-flexure --height-2dspec=100 --mask-cosmics #Reduce extended sources nod on slit
+python ./igr_pipe.py extended-onoff $UTDATE --correct-flexure --height-2dspec=100 --mask-cosmics #Reduce extended sources not off 
+slit
+python ./igr_pipe.py divide-a0v $UTDATE #Reduce stellar sources nod off slit
+echo "Done running"
+echo $UTDATE
+</code></pre>
+      <p><i>Note: The first time you run a shell script, it will need to be given permission using</i> "chmod +x name.sh" <i>and can then be run using</i> "./name.sh".</p>
+      <p>To run the PLP you are not required to run all of the recipes included in the run.sh script above. For example, if you never reduce extended objects you can remove the lines for "extended-ab" and "extended-onoff" from the run.sh in your IGRINS PLP directory. For each night you <i>must</i> run the critical set-up recipes including "flat", "register-sky", "flexure-setup", and "wvlsol-sky".</p>
+      <p>The output files from running the PLP v3 are explained in detail <a href = "https://github.com/igrins/plp/wiki/PLP-Data-Reduction-Products">here</a>.</p>
+      </section>
+      <hr>
+      <section id="trouble-shoot">
+      <h2>Troubleshooting Telluric Residuals</h2>
+      <p>Although the flexure correction present in IGRINS PLP v3 significantly lessens the telluric residuals present most all of the reduced IGRINS data, in some cases the telluric residuals will have not improved when compared with the IGRINS PLP v2.2.0 reduction. In this section we are going to talk about the three most common causes for persistent telluric residuals and what you can do to to reduce them in your data.</p>
+      <h3>1. All reduced data in a night has a poor telluric correction</h3>
+      <p>Below is an example of three different spectra with data taken on the same night (20170923; file number is in the top left of each plot) for the 8th order in K-band. We can see all of the spectra have relativly large telluric residuals in the same order which is not ideal.</p>
+      <figure>
+        <img src="../images/sky_residuals.png" alt="Order 8 in K-band plotted for three different spectra on 20170923.">
+      </figure>
+      <p>This is the easiest type of telluric residual issue to troubleshoot because when all of the data in a night is affected, it indicates that the sky frame for the night is likely causing the issue. The easiest way to tell what is happening with the sky frame is by checking out the recipe file used to reduce the data. Often times the issue is that there was no sky frame taken for the night and instead a frame from the dimmest target in the night is being used as the sky frame. If a single frame from the dimmest object in the night is being used as the sky frame and the telluric residual issue persists, we recommend replacing the current sky frame with a sky frame from a nearby night if available. We would only recommend trying to replace sky frames with targets that have K-mag > 11 with relatively short exposure times < 500 seconds.</p>
+      <p>For this particular night, 20170923, multiple frames from a K ~ 10.6 mag target were used as the sky frames, but because the exposure time for these frames was long, 700 seconds, the SNR was too high for these frames to be used as sky frames. Instead a dimmer target from the same night, KIC 6191574 (K-mag ~ 11.6), with shorter exposure times should've been used for the sky frame.</p>
+      <h3>2. Differences in Airmass</h3>
+      <p>If not all of the objects in the night have noticible telluric residuals, but your target has pesky smaller telluric residuals, the issue is likely the airmass difference between the target and standard star. The more atmosphere a objects light travels through, the deeper the lines from tellurics will be. If a target and standard star observed on the same night at close to the same time are close to the same airmass, we assume that the telluric lines will be roughly the same magnitude in depth. If a target and a standard start are in relativly different parts of the sky or are close together but observed too far apart in time, the atmosphere can change enough that the telluric lines will have different depths causing these pesky telluric residuals to stick around.</p>
+      <p>This is an example of an object where the airmass difference between the target and standard star was just enough to cause noticeable telluric residuals to stick around. The target and the standard were only observed 25 minutes apart in this case, and the difference in airmass was only 0.06. Usually a difference of < 0.1 in airmass is the best we can do! So we can expect these residuals in many of our reduced data products.</p>
+      <figure>
+        <img src="../images/airmass_residuals.png" alt="Order 8 in K-band plotted for file number 93 on 20141122.">
+      </figure>
+      <p>Removing these types of residuals is difficult because if there is not a standard star closer in airmass observed on the same night, there is not much that can be done. The only option would be to use a telluric model to correct for airmass differences which can be time consuming. The IGRINS team is currently working on a telluric model fitting code that could be used to remedy this issue.</p>
+      <h3>3. There is a bad frame</h3>
+      <p>If the sky frame is okay and the difference in airmass looks reasonable, the likely culprit for large telluric residuals is a bad frame. Bad weather (wind, clouds, dust, etc.) can make it difficult for telescopes to track objects across the sky while IGRINS is taking observations. Often bad frames are a result of the object not being centered on the slit during an observation which can cause small shifts in the wavelength from frame to frame. Frames like this are most likely to be found in observations taken at McDonald Observatory where the tracking is the least precise, but can appear in the IGRINS data from other telescopes as well.</p>
+      <p>This is also the hardest issue to diagnose because finding a bad frame out of a set can be really difficult since the change can be as subtle as a single pixel shift. Below is a gif flashing between two raw frames used in the reduction for an object. Can you see the subtle shift?</p>
+      <figure>
+        <img src="../images/zoomed_out_telluric_shift_flash.gif" alt="A gif flashing between a good and bad raw frame for an image.">
+      </figure>
+      <p>If you are having a hard time seeing the shift don't worry, it is not easy to find! It is easier to see in this gif that zooms into a small section of the above gif.</p>
+      <figure>
+        <img src="../images/zoomed_in_telluric_shift_flash.gif" alt="A gif flashing between a good and bad raw frame for an image.">
+      </figure>
+      <p>If you suspect there is a bad frame among your data you can first check "telluric_shift_H.csv" or "telluric_shift_K.csv" if you have reduced the data yourself using IGRINS PLP v3, if not reach out and we can send you these files! If the value in the third column is large for your file number (> 0.2) it likely means there is a bad frame with a telluric shift. You can then try to identify the bad frame by eye.</p>
+      <p>When you successfully find a bad frame among your raw data, you can remove the frame in the recipe file and re-reduce the data which will likley improve the residuals. However, removing a frame can reduce the SNR of your final spectra which is not ideal for all science applications. If you absolutely need to include all of the available frames in your reduction to reach a required SNR and there is a bad frame among them, <i><b>please reach out to the IGRINS team</b></i> and we will work with you on reducing the data.</p>
+      <p><i>Note: Bad frames are not only among target data, but can also be present in standard star reductions meaning bad frames can affect multiple targets in a night if the same standard is used multiple times. If you do not immediately see any issues with your target frames, be sure to check the standard star too!</i></p>
+      <h3>Reach out!</h3>
+      <p>If you notice any of your data has persistent telluric residuals and one of the above methods fixes your issue, please reach out to the IGRINS team via email or GitHub so we can note the issue in our logs to improve future reductions. If you are unable to diagnose the cause of the persistent telluric residuals in your data send us an email so we can work with you to resolve the issue!</p>
+      </section>
+    </div>
 </container>

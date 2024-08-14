@@ -70,7 +70,7 @@ container {
           <center>
             <figure>
               <img src="/images/IGRINS_optics.png" alt="The IGRINS optical layout"/>
-              <figcaption>The optical design of IGRINS.</figcaption>
+              <figcaption>The optical design layout of IGRINS from <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..1DP/abstract">Park+ 2014</a>.</figcaption>
             </figure>
           </center>
           <p>Since commissioning in July 2014, IGRINS has been scheduled for more that 1000 nights combined on the
@@ -85,27 +85,23 @@ container {
       </section>
       <section id="RRISA">
         <h1>The Raw & Reduced IGRINS Spectral Archive (RRISA)</h1>
-        <p>As of May 2021, IGRINS has completed almost 12,000 individual observations of both science targets and
-          telluric standards. RRISA features IGRINS data from more than 850 nights on-sky, resulting in 2,800 unique
+        <p>The Raw & Reduced IGRINS Spectral Archive (RRISA) features all publicly avalible IGRINS data taken between August 2014 and May 2023 including both the raw .fits files and the reduced data products output from the <a href = "https://zenodo.org/records/11080095">IGRINS PLP v3</a>. RRISA features spreadsheets with information about IGRINS observations and IGRINS targets that can be easily searched and sorted. These spreadsheets also include links for users to download IGRINS data either by night (for raw frames) or per target (for reduced data products). Finally, the RRISA XMatch sheet includes additional information about IGRINS targets from in the SIMBAD, 2MASS, Gaia DR3, APOGEE2-DR17, and PASTEL catalogs that users can use to build subsamples of IGRINS observations and search for targets within existing IGRINS observations easier.</p>
+        <p>As of May 2023, IGRINS has completed almost 18,000 individual observations of both science targets and
+          telluric standards. RRISA features IGRINS data from more than 1000 nights on-sky, resulting in 3,400 unique
           target observations from over 3,000 hours of total science time. RRISA also includes IGRINS observations
-          of >1,200 distinct A0V standard stars. The spatial distribution of the IGRINS observations RRISA
+          of around 800 distinct A0V standard stars. The spatial distribution of the IGRINS observations RRISA
           currently encompasses are in the following image:<p>
           <center>
             <figure>
-              <img src="/images/IGRINS_obs_density.png" alt="IGRINS Observation Density On-Sky"/>
-              <figcaption>Distribution of IGRINS observations (including A0V standards) up to May 2021 plotted in galactic coordinates. The color gradient represents density of unique observations: areas of space where IGRINS has more unique observations are lightest, while darker teal areas have fewer unique observations. The dense region on the lower left of the plot is Taurus, the center dense region is a mix of both Ophiuchus & Upper Scorpius, and the dense region on the lower right is the Orion star forming region.</figcaption>
+              <img src="/images/allskymap.png" alt="IGRINS Observation Density On-Sky"/>
+              <figcaption>Distribution of IGRINS observations (including A0V standards) up to May 2023 plotted in galactic coordinates. The color gradient represents density of unique observations: areas of space where IGRINS has more unique observations are lightest, while darker blue areas have fewer unique observations.</figcaption>
             </figure>
           </center>
-          <p>The Raw component of RRISA includes all of the frames IGRINS observed before May 2021--Flats, Darks, Arcs,
-          Targets & Telluric Standards--in their unedited form. However, we caution that the Raw component of RRISA is exactly
+          <p>The Raw component of RRISA includes all of the frames IGRINS observed before June 2023--flats, darks, arcs,
+          targets & telluric standards--in their unedited form. However, we caution that the Raw component of RRISA is exactly
           that, unedited. Users should not expect all target names to be searchable or coordinates to be correct
-          (particularly for observations at McDonald Observatory). The Reduced component of RRISA includes only the
-          output data products from the IGRINS PipeLine Package (<a href="https://github.com/igrins/plp">IGRINS PLP</a>),
-          names have been tediously cross checked by hand to ensure accuracy, and coordinates are corrected when SIMBAD
-          counterparts are available. The XMatch component of RRISA includes information to access the IGRINS reduced data
-          products as well as additional information provided from a few surveys for some of the targets. For more detail on
-          each component of RRISA check out the corresponding tabs
-          above!</p>
+          (particularly for observations at McDonald Observatory). The Reduced component of RRISA includes only
+          IGRINS data products that have been reduced using the IGRINS PipeLine Package v3 (<a href="https://github.com/igrins/plp">IGRINS PLP</a>). IGRINS data that may require custom extractions like multiple objects on the slit or extended sources are often not included in the reduced component of RRISA. The XMatch component of RRISA includes access to the IGRINS reduced data products as well as additional information provided from SIMBAD, 2MASS, Gaia DR3, APOGEE2-DR17, and PASTEL catalogs for each target when it is avalible. For more detail on what each component of RRISA includes check out the corresponding tabs above!</p>
       </section>
       <section id="cite">
         <h1>Required Citation</h1>
@@ -124,7 +120,7 @@ container {
           <li> <a href="https://ui.adsabs.harvard.edu/abs/2018SPIE10702E..0QM/abstract">Mace+ 2018</a>: <em>IGRINS at the Discovery Channel Telescope and Gemini South</em></li>
         </ul>
         <p>If you use any <em><strong>reduced data products</strong></em> be sure to <em><strong>cite</strong></em>
-           the IGRINS PLP: <a href="https://ui.adsabs.harvard.edu/abs/2017zndo....845059L/abstract">Lee+ 2017</a></p>
+           the IGRINS PLP: either <a href="https://ui.adsabs.harvard.edu/abs/2017zndo....845059L/abstract">Lee+ 2017</a> for IGRINS PLP v2 or <a href = "https://zenodo.org/records/11080095">Kaplan+ 2024</a> for IGRINS PLP v3.</a></p>
         <p>The standard acknowledgement for IGRINS <em><strong>must</strong></em> be in every publication using IGRINS data:</p>
         <blockquote>
             “This work used The Immersion Grating Infrared Spectrometer (IGRINS) was developed under a collaboration between
@@ -136,15 +132,8 @@ container {
       </section>
       <section id="review">
         <h1>Internal Referee</h1>
-        <p><em><strong>Authors should inform the IGRINS team of the submission of all papers, refereed and non-refereed, at the time of
-          acceptance, giving the title, journal, volume, and author list. This allows us to track instrument use for grant
-          requirements.</strong></em></p>
-        <p>The IGRINS team has an internal refereeing process for observing and instrumentation papers. <strong>Since we verify the representation
-          and use of IGRINS in all published papers</strong>, it is in the best interest of the author to provide us with a copy at submission in
-          order to ensure that the above guidelines have been followed. We strongly recommend that all papers to be submitted to a refereed
-          journal that using IGRINS data or technical information go through the IGRINS internal refereeing process. Papers for non-refereed
-          conference proceedings may also make use of this service. First authors should submit papers that are ready for publication directly
-          to igrins.contact [at] gmail.com for comment. Revisions in response to these comments can be made at the discretion of the authors.</p>
+        <p><em><strong>Authors should inform the IGRINS team of the submission of all papers, refereed and non-refereed, at submission, giving the title, journal, volume, author list, and paper draft. This allows us to track instrument use for grant requirements.</strong></em></p>
+        <p>The IGRINS team has an internal refereeing process for observing and instrumentation papers. <strong>Since we verify the representation and use of IGRINS in all published papers</strong>, it is in the best interest of the author to provide us with a copy at submission in order to ensure that the above guidelines have been followed. <strong>We stronlgy recommend all papers using IGRINS data or technical information that the authors plan to submit to a refereed journal go through the IGRINS internal refereeing process.</strong> Papers for non-refereed conference proceedings may also make use of this service. First authors should submit papers that are ready for publication directly to igrins.contact [at] gmail.com for comment. Revisions in response to these comments can be made at the discretion of the authors.</p>
       </section>
       <section id="GMTNIRS">
         <h1>GMTNIRS</h1>
