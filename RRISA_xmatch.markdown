@@ -42,7 +42,7 @@ Below is a figure showing a summary of some of the cross-match parameters from e
 <center>
   <figure>
     <img src="/images/xmatch_stats.png" alt="Cross-match statistics for each catalog for 2MASS H/K magnitude, effective temperature, surface gravity, and metallicity." width = "600"/>
-    <figcaption><i><u>Left:</u></i> a color-magnitude diagram using 2MASS H- and K-magnitudes for 4042 unique objects in the IGRINS cross-matched sample. Darker colors are low density regions of the diagram while light colors are high density. <i><u>Right:</u></i> three histograms for surface density, effective temperature, and metallicity (iron abundance) from top to bottom. Each histogram includes a distribution from Gaia DR3, APOGEE2 DR17, and PASTEL (from darkest to lightest color) with the amount of unique objects from each catalog labeled. These plots include both target objects and standard stars from the IGRINS cross-matched sample.</figcaption>
+    <figcaption><i><u>Left:</u></i> a color-magnitude diagram using 2MASS H- and K-magnitudes for 3972 unique objects in the IGRINS cross-matched sample. Darker colors are low density regions of the diagram while light colors are high density. <i><u>Right:</u></i> three histograms for surface density, effective temperature, and metallicity (iron abundance) from top to bottom. Each histogram includes a distribution from Gaia DR3, APOGEE2 DR17, and PASTEL (from darkest to lightest color) with the amount of unique objects from each catalog labeled. These plots include both target objects and standard stars from the IGRINS cross-matched sample.</figcaption>
   </figure>
 </center>
 
