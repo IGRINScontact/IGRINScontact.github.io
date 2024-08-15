@@ -9,7 +9,9 @@ permalink: /RRISA_reduced/
 
 <h1>Reduced Data Products</h1>
 All of IGRINS data included in the Reduced version of RRISA have been reduced using the [v3 of the IGRINS PLP](https://github.com/igrins/plp/tree/v3.0.0). 
-The Reduced version of RRISA includes three names for each of the targets: the hand corrected name, the superlog name which can be used to link individual files from the Raw component of RRISA its reduced counterpart and the recipe name which is the name associated with the reduced file, usually manually input often given by the observer.
+The Reduced version of RRISA includes three names for each of the targets: the hand corrected name, the superlog name, and the recipe name.
+The superlog name (OBJNAME in Raw, OBJNAME_super in Reduced & XMatch) is the user input target name and can be used to search for the same object in all three of the RRISA sheets. 
+The hand corrected name can be used to search for the same object in the Reduced & XMatch sheets.
 The superlog name and the recipe name will not always match, but usually they are similar or alternate identifiers for the same object.
 If users find anything that appears to be a misidentification we ask that they report it by raising a [GitHub issue](https://github.com/IGRINScontact/RRISA/issues) or contacting us at igrins.contact[at]gmail.com.
 Finally, __not all of the reduced IGRINS data is necessarily good quality.__

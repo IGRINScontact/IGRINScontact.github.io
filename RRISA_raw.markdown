@@ -32,7 +32,7 @@ The IGRINS slit dimensions (width x length) in arcseconds are 0.34x5 at Gemini S
 Point sources (anything with a seeing limited image on the slit-viewer) are generally observed in two positions on the slit.
 The two positions, A and B, are separated by half a slit length.
 
-__*Note:*__ _Data acquired between April 2018 and May 2019 was impacted by a slight K-band defocus. The details of the defocus are available at [the IGRINS@Gemini webpage](https://sites.google.com/site/igrinsatgemini/2018-k-band-resolution)._
+__*Note:*__ _Data acquired between April 2018 and May 2019 were impacted by a slight K-band defocus. The details of the defocus are available at [the IGRINS@Gemini webpage](https://sites.google.com/site/igrinsatgemini/2018-k-band-resolution)._
 
 <h3>RRISA Raw</h3>
 
