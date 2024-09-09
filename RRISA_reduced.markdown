@@ -30,7 +30,7 @@ Originally, IGRINS used a calibration unit installed that permitted nightly obse
 Since IGRINS has no moving optics, it has a fixed spectral format that changes on the order on <1 pixel per night and <5 pixels over a year.
 The wavelength solution for IGRINS data comes from an initial guess based on the historical wavelength solution.
 This initial guess is then refined using sky OH emission features in a 300s sky frame taken each night on the telescope.
-Sky frames from adjacent nights also provide reliable wavelength solutions and are sometimes used when no sky frame is avalible for a night.
+Sky frames from adjacent nights also provide reliable wavelength solutions and are sometimes used when no sky frame is available for a night.
 <!---(this is apparently not true in v3 anymore) The wavelength solution is further refined by using telluric absorption features in the A0V standard at wavelengths greater than 2.1μm.
 The dependence of the refinement on the telluric A0V means that the wavelength solution for each target is that copied from the associated telluric star.--->
 
@@ -58,25 +58,25 @@ When downloading reduced data using RRISA, the following files are included in e
 1. **spec_a0v.fits:** The target spectrum telluric corrected by the Vega corrected A0V. This FITS file includes the original data used to create the reduced spectrum. Each extension is a 2048x28 array with the same header. The differences between each of the EXTNAMEs are:
   - _[0]-Primary:_ Only contains the header with information about the observation
   - _[1]-SPEC_DIVIDE_A0V:_ The corrected target spectrum = (TGT_SPEC/A0V_SPEC)*VEGA_SPEC. This spectrum is roughly telluric corrected and relatively flux calibrated.
-  - _[2]-SPEC_DIVIDE_A0V_VARIANCE:_ The variance of SPEC_DIVIDE_A0V (per pixel) propgated from the variance in the individual target and standard spectrum.
+  - _[2]-SPEC_DIVIDE_A0V_VARIANCE:_ The variance of SPEC_DIVIDE_A0V (per pixel) propagated from the variance in the individual target and standard spectrum.
   - _[3]-WAVELENGTH:_ The wavelength solution from the OH sky lines (in um)
   - _[4]-TGT_SPEC:_ The extracted target spectrum (same as in spec.fits file)
   - _[5]-TGT_SPEC_VARIANCE:_ The variance of TGT_SPEC (per pixel).
-  - _[6]-A0V_SPEC:_ The extracted A0V spectrum used for the standard star division. The observation ID (file number) for the A0V used is avalible as the 'OBSID' keyword in the header for this extension.
+  - _[6]-A0V_SPEC:_ The extracted A0V spectrum used for the standard star division. The observation ID (file number) for the A0V used is available as the 'OBSID' keyword in the header for this extension.
   - _[7]-A0V_SPEC_VARIANCE:_ The variance of A0V_SPEC (per pixel).
   - _[8]-VEGA_SPEC:_ A model of the Vega spectrum ([see the file in the PLP](https://github.com/igrins/plp/blob/master/master_calib/A0V/vegallpr25.50000resam5.npy) or for more detailed info regarding the file see this [link](http://kurucz.harvard.edu/stars.html)).
-  - _[9]-SPEC_DIVIDE_CONT:_ Similar to SPEC_DIVIDE_A0V, but the target spectrum is divided by the estimated continuum of the A0V star instead of the A0V spectrum itself. The resulting spectrum is relativly flux calibrated but _not_ telluric corrected.
+  - _[9]-SPEC_DIVIDE_CONT:_ Similar to SPEC_DIVIDE_A0V, but the target spectrum is divided by the estimated continuum of the A0V star instead of the A0V spectrum itself. The resulting spectrum is relatively flux calibrated but _not_ telluric corrected.
   - _[10]-SPEC_DIVIDE_CONT_VARIANCE:_ The variance of SPEC_DIVIDE_CONT (per pixel).
   - _[11]-MASK:_ The pixels used in the A0V star continuum fit for SPEC_DIVIDE_CONT. A value of 1 is not used in the continuum fit.
-2. **sn.fits:** The signal-to-noice (per resolution element) for the extracted 1D spectrum. We reccomend using .variance.fits for the uncertainty. Columns are x pixel position on the detector and rows are echelle orders.
+2. **sn.fits:** The signal-to-noise (per resolution element) for the extracted 1D spectrum. We recommend using .variance.fits for the uncertainty. Columns are x pixel position on the detector and rows are echelle orders.
 3. **spec.fits:** The extracted 1D spectra. Columns are x pixel position on the detector and rows are echelle. The pixel values are the extracted counts.
 4. **spec2d.fits:** The 2D spectrum stored as a data-cube of the rectified echelle orders. The x-axis is pixel across the detector and y-axis is the spatial axis along the IGRINS slit. The pixel values are detector counts.
 5. **var2d.fits:** The variance (per pixel) of the 2D spectrum. The x-axis is pixel across the detector and y-axis is the spatial axis along the IGRINS slit.
 6. **variance.fits:** Variance for the 1D spectra in spec.fits. Columns are x pixel position on the detector and rows are echelle order. The pixel values are the extracted counts.
-7. **slit_profile.json:** The average measured slit profile for a target AB nodded on the slit. The array labeled "profile_x" is the fractional distace across the slit and "profile_y" is the slit profile of the target. This is the slit profile used for optimal extraction explained more [here](https://github.com/igrins/plp/wiki/One-dimensional-spectra-extraction).
+7. **slit_profile.json:** The average measured slit profile for a target AB nodded on the slit. The array labeled "profile_x" is the fractional distance across the slit and "profile_y" is the slit profile of the target. This is the slit profile used for optimal extraction explained more [here](https://github.com/igrins/plp/wiki/One-dimensional-spectra-extraction).
 8. **1d_plots.pdf:** The SPEC_DIVIDE_A0V extension of spec.a0v.fits plotted by order. The y-axis limits of each order are set using the 99th flux percentile of the trimmed order, but usually this is not ideal for anything other than quick-looking the quality of the telluric correction. 
 
-There are additional files output by the IGRINS PLP avalible upon request detailed [here](https://github.com/igrins/plp/wiki/PLP-Data-Reduction-Products).
+There are additional files output by the IGRINS PLP available upon request detailed [here](https://github.com/igrins/plp/wiki/PLP-Data-Reduction-Products).
 
 <!---
 The PLP outputs several files for each reduction:
@@ -95,7 +95,7 @@ The PLP outputs several files for each reduction:
 8. **wave.fits** (for both target and A0): The vacuum wavelength solution for a given source, in nm (so 1429nm for instance).
 --->
 
-__*Note:*__ _The output files from the IGRINS PLP are an in vacuum wavelength solution. Fit models are offset from expected line positions by 80-120 km/s the models are likely in air and not vacuum. The IAU standard conversion for air to vacuum wavelengths is given by [Morton 1991](https://ui.adsabs.harvard.edu/abs/1991ApJS...77..119M/abstract). For vacuum wavelengths (VAC) in Angstroms and convert to air wavelength (AIR) via:_
+__*Note:*__ _The output files from the IGRINS PLP are an in-vacuum wavelength solution. Fit models are offset from expected line positions by 80-120 km/s the models are likely in air and not vacuum. The IAU standard conversion for air to vacuum wavelengths is given by [Morton 1991](https://ui.adsabs.harvard.edu/abs/1991ApJS...77..119M/abstract). For vacuum wavelengths (VAC) in Angstroms and convert to air wavelength (AIR) via:_
 <center>
 <em>AIR = VAC / (1.0 + 2.735182E-4 + (131.4182 / VAC^2) + (2.76249E8 / VAC^4))</em>
 </center>
