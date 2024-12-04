@@ -16,10 +16,11 @@ Slit-viewer camera images (SDCS\_[YYYYMMDD]\_[frameno].fits) used for target acq
 Between 20150401 and 20170310, slit-viewer camera images were only saved per the observer's discretion (due to limited hard-drive space) and are not linked with raw .spec file numbers.
 Users can associate SDCS images taken during this time with the raw .spec files by comparing the Julian date of observation for the .spec file with the Julian date of the SDCS image (found in the header).
 In RRISA Raw, we flag which dates have SDCS images available in this date rage by putting a "-1" flag in the SDCS column.
-The flag is followed by the number of SDCS images saved for that particular date (ie. a night with 100 SDCS images would have the value "-1 100" in the SDCS column).
-After 20170310 SDCS images can be associated with specific raw .spec files.
+The flag is followed by the number of SDCS images saved for that particular date (i.e. a night with 100 SDCS images would have the value "-1 100" in the SDCS column).
+After 20170310 SDCS images are associated with specific raw .spec files, when a spectrum is actively being taken.
 The SDCS column in RRISA Raw contains the list of all the SDCS image file numbers taken while a raw .spec file was acquired (when available).
-Slit-viewer camera images can be downloaded using the link in the RRISA Raw "RAW_URL" column for a given civil date manually.
+A full list of any SDCS image IGRINS has ever saved is available in the SDCS log as part of RRISA Raw.
+Slit-viewer camera images can be downloaded using the link in the RRISA Raw and SDCS log "RAW_URL" column.
 *Please note that the slit-viewer camera images are not appropriate for photometry.*
 
 Some spectral files are not suitable for science. For example - exposures interrupted by weather, frames with incorrect exposure times, or mislabeled frames.
