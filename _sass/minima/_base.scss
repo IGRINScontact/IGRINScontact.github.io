@@ -114,7 +114,7 @@ a {
 
   &:hover {
     color: $brand-light;
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   .social-media-list &:hover {
@@ -123,6 +123,20 @@ a {
     .username {
       text-decoration: underline;
     }
+  }
+}
+
+.site-banner-wrapper a{
+  color: #bbd5fa;
+  text-decoration: underline;
+
+  &:visited {
+    color: $sky-color;
+  }
+
+  &:hover {
+    color: $sky-color;
+    text-decoration: underline;
   }
 }
 

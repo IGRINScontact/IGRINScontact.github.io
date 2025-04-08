@@ -109,6 +109,23 @@
 }
 
 
+/**
+ * Site banner for paper citation
+ */
+.site-banner {
+  min-height: $spacing-unit * 1.2;
+  background: $navy-color;
+}
+
+.site-banner-wrapper {
+  line-height: $base-line-height * $base-font-size * 1.5;
+  @include relative-font-size(1.2);
+  text-align: center;
+  color: $sky-color;
+  @extend %clearfix;
+  font-style: italic;
+}
+
 
 /**
  * Site footer
