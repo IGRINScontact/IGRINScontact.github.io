@@ -34,10 +34,12 @@ Sky frames from adjacent nights also provide reliable wavelength solutions and a
 <!---(this is apparently not true in v3 anymore) The wavelength solution is further refined by using telluric absorption features in the A0V standard at wavelengths greater than 2.1μm.
 The dependence of the refinement on the telluric A0V means that the wavelength solution for each target is that copied from the associated telluric star.--->
 
-Telluric standards are generally A0V stars, which are Vega corrected using a [model of the Vega spectrum](http://kurucz.harvard.edu/stars.html) ([see the file in the PLP](https://github.com/igrins/plp/blob/v3.0.0/master_calib/A0V/vegallpr25.50000resam5.npy), but also stored in each spec_a0v.fits file as an extension) to remove the deep and broad H2 absorption features.
-This process is not perfect and can leave residual features due to differences in the line widths and radial velocities of the telluric stars relative to the Vega model.
-Additionally, the model Vega spectrum is not meant for careful flux calibration science cases, but is appropriate for science cases where the target spectrum is continuum normalized.
+Telluric standards are generally A0V stars, which are Vega corrected using a [model of the Vega spectrum](http://kurucz.harvard.edu/stars.html) ([see the file in the PLP](https://github.com/igrins/plp/blob/v3.0.0/master_calib/A0V/vegallpr25.50000resam5.npy), but also stored in each spec_a0v.fits file as an extension) to remove the deep and broad HI absorption features.
+This process is not perfect and can leave residual spectral features in the target spectrum due to differences in the line widths and radial velocities of the telluric stars relative to the Vega model.
 When using PLP data for science pertaining to individual line strengths, users should compare the spectrum to that of the A0V, the Vega model and [the Earth transmittance spectrum](https://psg.gsfc.nasa.gov/index.php).
+
+**The IGRINS PLP outputs are not meant for science cases requiring absolute flux calibration. To achieve the best reduced IGRINS data quality we recommend post-processing the data provided in RRISA using the [IGRINS Absolute Flux Calibration](https://github.com/kfkaplan/IGRINS_absolute_flux_calibrator).**
+<!----Additionally, **the model Vega spectrum is not meant for careful flux calibration science cases, but is appropriate for science cases where the target spectrum is continuum normalized**.---->
 <!---
 If the spectrum has significant telluric residuals, we provide Python based tools on the Tutorial page for how to help remove these features. 
 If the spectrum has excess A0V residuals, the Vega model and A0V spectrum from the PLP can be used to perform an improved telluric correction. 

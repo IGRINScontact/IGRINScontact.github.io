@@ -1,0 +1,118 @@
+---
+layout: default
+---
+
+<style>
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. Make nav sticky */
+container > nav {
+  position: sticky;
+  align-self: start;
+  top: 2rem;
+}
+
+/* Sidebar Navigation */
+.section-nav {
+  padding-right: 0;
+  margin-right: 2rem;
+}
+
+.section-nav a {
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  color: #004aad;
+  width: 15rem;
+}
+
+.section-nav a:hover,
+.section-nav a:focus{
+  color: #85ACDE;
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ol:nth-child(2) > *{
+    padding-left: 16px;
+}
+
+/** page layout **/
+container {
+  display: flex;
+  flex-direction: row;
+}
+
+hr {
+  border-color: #004aad;
+  background-color: #004aad;
+  /* margin: auto; */
+  margin: 1em 0;
+}
+
+</style>
+
+<container>
+  <nav class="section-nav">
+    <ol>
+      <li><a href="#gen">General Recommendations</a></li>
+      <li><a href="#defocus">K-band Defocus</a></li>
+      <li><a href="#br-series">IGRINS PLP Brackett Series Artifacts</a></li>
+      </ol>
+    </ol>
+  </nav>
+
+  <div>
+      <section id='gen'>
+        <h1>General Recommended Quality Checks</h1>
+        <p>We recommend users of RRISA quality check the reductions for each of their targets, just because data has been reduced and included in RRISA does not guarantee that it is reduced <em>well</em>. The IGRINS Team has quality checked reductions to the best of their ability, but there are still erroneous frames that can slip through. We recommend verifying the following for each of your obervations using the <a href="https://utexas.box.com/s/wnkqbgf5atxx1hy1ejiou1r2avdcx4c3">IGRINS obsering logs</a> and the <a href='https://utexas.box.com/s/6o5tvdnri3lnn6udne5qrrqrpgockf8j'>IGRINS reduction logs</a>:</p>
+        <ul>
+          <li>Verify that only good frame numbers reported in the observing log are used in the reduction log.</li>
+          <li>Check that the correct PLP recipe was used for the reduction (e.g. stellar vs. on/off) in the reduction log.</li>
+          <li>Ensure that the correct standard star file number was used in the reduction log (well matched standard stars should be within ~0.1 airmass of the target airmass and observed around the same time as the target).</li>
+          <li>For observations that are taken in the very beginning or end of the night, check that the raw frames do not include the solar spectrum.</li>
+          <li><strong>To have the best quality reduced IGRINS data, we recommend post processing data from RRISA using the <a href="https://github.com/kfkaplan/IGRINS_absolute_flux_calibrator">IGRINS Absolute Flux Calibrator</a>.</strong></li>
+        </ul>
+      </section>
+
+      <hr>
+
+      <section id="defocus">
+        <h1>K-Band Defocus Period</h1>
+          <p>Data acquired between April 2018 and May 2019 were impacted by a slight K-band defocus. The details of the defocus are available at the <a href="https://sites.google.com/site/igrinsatgemini/2018-k-band-resolution">IGRINS@Gemini webpage</a>. An example of measuring the resolution of IGRINS during the defocus period can be found in section 2.2.3. of <a href="https://scixplorer.org/abs/2025harv.data..279I/abstract">Ishikawa et al. 2025</a>.</p>
+      </section>
+
+      <hr>
+
+      <section id="br-series">
+        <h1>IGRINS PLP Poor Brackett Series Correction</h1>
+          <p><em><strong>We recommend all RRISA users post-process their data using the IGRINS absolute flux calibration to achieve the best target data reduction, particularly when the science application for the data includes analysis of the Brackett Series features.</strong></em></p>
+
+          <p>The IGRINS PLP does it’s <em>relative</em> flux calibration by assuming the standard star observed for each observation is Vega-like; this output becomes the spec_a0v.fits file that you get from RRISA (e.g. (TGT_SPEC/A0V_SPEC)*VEGA_SPEC). However, this can cause issues when standard stars are not Vega-like (common for observations not at Gemini South), particularly for Br-series lines because the Vega model the IGRINS PLP uses has fixed and narrow width HI line profiles. This under-corrects the true Br-series line profiles of the standard stars, leaving behind residual uncorrected Br-series features in the final target spectrum.</p>
+
+          <img src="../images/br-series.png" alt="A comparison of the Br-series absorption features in data from RRISA and after running the data through the IGRINS Absolute Flux Calibration.">
+          <figcaption>A comparison of some of the Br-series lines with data taken directly from RRISA v3 (orange) and after the IGRINS Absolute Flux Calibration (purple). We can see a significant reduction in the absorption apperance in the lines with the improved standard star modeling from the IGRINS Absolute Flux Calibration.</figcaption>
+
+          <br>
+
+          <p><strong>If your science requires accurate Br-series feature correction</strong>, we recommend using the <a href="https://github.com/kfkaplan/IGRINS_absolute_flux_calibrator">IGRINS Absolute Flux Calibrator</a>. The absolute flux calibration fits an estimate of the fraction of light that passes through the slit for each echelle order to determine the wavelength dependent fraction of light through the slit for both the target and the standard. The best fit model from the PHOENIX stellar atmosphere model grid (<a href="https://phoenix.astro.physik.uni-goettingen.de/">Husser et al. (2013)</a>) is used to find the best fit stellar parameters for the standard star (Teff, logg, Z, rotational velocity, and radial velocity). The best fit model is selected based on the best fit to the Br-gamma and Br-14 line features (at 2.16612 um and 1.58849 um). The best fit synthetic model is then scaled to the known V-band magnitude of the standard star to produce the best estimate of the standard star's intrinsic spectrum. The emperical absolute flux calibration and telluric correction of the science target spectrum is then estimated using the following equations:</p>
+
+          <img src="../images/flux_calibration.png" alt="The series of equations used for the IGRINS absolute flux calibration.">
+
+          <p>The output flux from the IGRINS absolute flux calibration is in units of erg s-1 cm-2 um-1. The output file type from the absolute flux calibration is .flux_a0v.fits; users can find more information about the extensions contained in this file <a href="https://github.com/kfkaplan/IGRINS_absolute_flux_calibrator/wiki#data-products---the-flux_a0vfits-files">here</a>. Finally, the absolute flux calibration also performs synthetic photometry of the science target which can be directly compared with the 2MASS H- and K-band magnitudes.</p>
+
+          <p>We have found for non-variable targets, the precision for the absolute flux calibration is within 0.1 to 0.2 magnitudes of the 2MASS H- and K-band magnitudes. Under good conditions, it can estimate within < 0.1 magnitudes. Many science targets observed with IGRINS are variable so this comparison may not always be well matched to the existing magnitudes, but it does provide a good sanity check.</p>
+
+          <p>The IGRINS absolute flux calibration <strong>cannot correct for flux loss due to poor weather conditions</strong>. We recommend users interested in accurate absolute flux for their targets, verify the weather conditions for the observations using the <a href="https://utexas.box.com/s/wnkqbgf5atxx1hy1ejiou1r2avdcx4c3">IGRINS obsering logs</a>.</p>
+
+          <p>For a more detailed explanation of the absolute flux calibration, check out the IGRINS absolute flux calibration <a href="https://github.com/kfkaplan/IGRINS_absolute_flux_calibrator/wiki">wiki</a>. If you have any futher questions, reach out to the IGRINS Team: igrins.contact [at] gmail.com.</p>
+      </section>
+  </div>
+</container>

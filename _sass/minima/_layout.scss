@@ -6,6 +6,7 @@
   border-bottom: 2px solid $navy-color;
   min-height: $spacing-unit * 1.865;
   background: $sky-color;
+  Text-align: center;
 
   // Positioning context for the mobile navigation icon
   position: relative;
@@ -17,8 +18,8 @@
   line-height: $base-line-height * $base-font-size * 2.25;
   letter-spacing: -1px;
   margin-bottom: 0;
-  margin-left: 10px;
-  float: left;
+  margin-left: 0px;
+  float: center;
 
   &,
   &:visited {
@@ -31,9 +32,9 @@
 }
 
 .site-nav {
-  float: right;
-  margin-right: 10px;
-  line-height: $base-line-height * $base-font-size * 2.25;
+  float: center;
+  margin-right: 0px;
+  line-height: $base-line-height * $base-font-size * 1.75;
 
   .nav-trigger {
       display: none;

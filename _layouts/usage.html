@@ -1,0 +1,179 @@
+---
+layout: default
+---
+
+<style>
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. Make nav sticky */
+container > nav {
+  position: sticky;
+  align-self: start;
+  top: 2rem;
+}
+
+/* Sidebar Navigation */
+.section-nav {
+  padding-right: 0;
+  margin-right: 2rem;
+}
+
+.section-nav a {
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  color: #004aad;
+  width: 15rem;
+}
+
+.section-nav a:hover,
+.section-nav a:focus{
+  color: #85ACDE;
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ol:nth-child(2) > *{
+    padding-left: 16px;
+}
+
+ol:nth-child(4) > *{
+    padding-left: 16px;
+}
+
+/** page layout **/
+container {
+  display: flex;
+  flex-direction: row;
+}
+
+hr {
+  border-color: #004aad;
+  background-color: #004aad;
+  /* margin: auto; */
+  margin: 1em 0;
+}
+
+</style>
+
+<container>
+  <nav class="section-nav">
+    <ol>
+      <li><a href="#required"><strong>Requirements</strong></a></li>
+      <ol>
+        <li><a href="#cite-IGRINS">IGRINS Citations</a></li>
+        <li><a href="#cite-RRISA">RRISA Citation</a></li>
+        <li><a href="#cite-PLP">IGRINS Pipeline Citations</a></li>
+        <li><a href="#acknowledgement">Acknowledgements</a></li>
+        <li><a href="#review">Internal IGRINS Referee</a></li>
+      </ol>
+      <li><a href="#rec"><strong>Recommendations</strong></a></li>
+      <ol>
+        <li><a href="#cite-IGRINS-rec">IGRINS Citations</a></li>
+        <li><a href="#UTA">UT Austin Infrared Spectroscopy Group Acknowledgement</a></li>
+        <li><a href="#PIs">PI Notification</a></li>
+        <li><a href="#gen">General Acknowledgement</a></li>
+      </ol>
+    </ol>
+  </nav>
+  <div>
+      <section id="required">
+
+        <section id="cite-IGRINS">
+          <h1>Required Citations</h1>
+          <p>We <em><strong>require</strong></em> that <u>users of IGRINS and those who access IGRINS data via RRISA</u> <em><strong>cite</strong></em> the following instrumentation papers for IGRINS in their publications:</p>
+            <ul>
+              <li> <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..1DP/abstract">Park+ 2014</a>: <em>Design and early performance of IGRINS (Immersion Grating Infrared Spectrometer)</em></li>
+              <li> <a href="https://ui.adsabs.harvard.edu/abs/2016SPIE.9908E..0CM/abstract">Mace+ 2016</a>: <em>300 nights of science with IGRINS at McDonald Observatory</em></li>
+              <li> <a href="https://ui.adsabs.harvard.edu/abs/2018SPIE10702E..0QM/abstract">Mace+ 2018</a>: <em>IGRINS at the Discovery Channel Telescope and Gemini South</em></li>
+            </ul>
+        </section>
+
+        <section id="cite-RRISA">
+          <p>We <em><strong>require</strong></em> that <u>users who access IGRINS data via RRISA</u> <em><strong>cite</strong></em> the RRISA paper:</p>
+          <ul>
+            <li><a href="https://ui.adsabs.harvard.edu/abs/2025PASP..137c4505S/abstract">Sawczynec+ 2025</a>: <em>10 Years of Archival High-resolution NIR Spectra: The Raw and Reduced IGRINS Spectral Archive (RRISA)</em></li>
+          </ul>
+        </section>
+
+        <section id="cite-PLP">
+          <p>Finally, we <em><strong>require</strong></em> that <u>users who access IGRINS data via RRISA</u> or those who reduced raw IGRINS data using the IGRINS PLP <em><strong>cite</strong></em> the IGRINS PLP papers:</p>
+          <ul>
+            <li><a href = "https://ui.adsabs.harvard.edu/abs/2014AdSpR..53.1647S/abstract">Sim+ 2014</a>: <em>Comprehensive data reduction package for the Immersion GRating INfrared Spectrograph: IGRINS</em></li>
+            <li><a href = "https://zenodo.org/records/11080095">Kaplan+ 2024</a>: <em>IGRINS PLP v3 on Zenodo</em></li>
+          </ul>
+        </section>
+
+        <section id="acknowledgement">
+          <h1>Required Acknowledgements</h1>
+            <p>The standard acknowledgement for IGRINS <em><strong>must</strong></em> be in every publication using IGRINS data:</p>
+              <blockquote>
+                  “This work used The Immersion Grating Infrared Spectrometer (IGRINS) was developed under a collaboration between
+                  the University of Texas at Austin and the Korea Astronomy and Space Science Institute (KASI) with the financial
+                  support of the US National Science Foundation under grants AST-1229522, AST-1702267 and AST-1908892, McDonald
+                  Observatory of the University of Texas at Austin, the Korean GMT Project of KASI, the Mt. Cuba Astronomical
+                  Foundation and Gemini Observatory."
+              </blockquote>
+            <p>For users who access IGRINS data via RRISA the RRISA acknowledgement <em><strong>must</strong></em> be included in the publication:</p>
+              <blockquote>
+                "The RRISA is maintained by the IGRINS Team with support from McDonald Observatory of the University of Texas at Austin and the US National Science Foundation under grant AST-1908892.”
+              </blockquote>
+        </section>
+
+        <section id="review">
+          <h1>Required Internal Referee</h1>
+          <p><em><strong>Authors are required to inform the IGRINS team of the submission of all papers, refereed and non-refereed, <u>two weeks before expected submission</u>, giving the title, journal, volume, author list, and paper draft.</strong></em></p>
+          <p>The IGRINS team has an internal refereeing process for observing and instrumentation papers. <em>Since we verify the representation and use of IGRINS in all published papers,</em><strong> it is in the best interest of the author </strong> to provide us with a copy of the paper two weeks before submission. We review included IGRINS data for known artifacts (e.g. inclusion of data taken during the IGRINS defocus period), review observing logs to ensure the best reduction possible is achieved, and assist with contacting data PIs with any questions about the data. Papers for non-refereed conference proceedings may also make use of this service. <strong><u>First authors should submit papers at least two weeks before submission directly to igrins.contact [at] gmail.com for comment.</u></strong> <em>Revisions in response to these comments can be made at the discretion of the authors.</em></p>
+        </section>
+      </section>
+
+      <hr>
+
+      <section id="rec">
+
+        <section id="cite-IGRINS-rec">
+          <h1>Recommended IGRINS Citations</h1>
+             <p>We ask that users of IGRINS and those who access IGRINS data via RRISA <em><strong>consider</strong></em> citing the following instrumentation papers <em>in addition</em> to those required above:</p>
+              <ul>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2010SPIE.7735E..1MY/abstract">Yuk+ 2010</a>: <em>Preliminary design of IGRINS (Immersion GRating INfrared Spectrograph)</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2010SPIE.7739E..4LW/abstract">Wang+ 2010</a>: <em>Manufacturing of silicon immersion gratings for infrared spectrometers</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8450E..2SG/abstract">Gully-Santiago+ 2012</a>: <em>Near-infrared metrology of high-performance silicon immersion gratings</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8450E..48M/abstract">Moon+ 2012</a>: <em>Immersion grating mount design for IGRINS and GMTNIRS</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2012SPIE.8550E..1BH/abstract">Han+ 2012</a>: <em>Alignment based on a no adjustment philosophy for the Immersion Grating Infrared Spectrometer (IGRINS)</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..39O/abstract">Oh+ 2014</a>: <em>Mechanical design of mounts for IGRINS focal plane arrays and field flattening lenses</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2014SPIE.9154E..1XJ/abstract">Jeong+ 2014</a>: <em>Characterization and optimization for detector systems of IGRINS</em></li>
+                <li> <a href="https://ui.adsabs.harvard.edu/abs/2026SPIE14149E..2RJ/abstract">Jeong+ 2026</a>: <em>Upgrade of detector control electronics for IGRINS</em></li>
+              </ul>
+        </section>
+
+        <section id="UTA">
+          <h1>Recommended IGRINS Team Contribution Acknowledgement</h1>
+          <p>The IGRINS team at the University of Texas at Austin has dedicated several decades designing and fabricating IGRINS, it's data reduction pipeline (<a href="https://github.com/igrins/plp">IGRINS PLP</a>), several python packages to support post processing and model fitting of IGRINS data (<a href="https://github.com/OttoStruve/muler">muler</a> & <a href="https://github.com/BrownDwarf/gollum/">gollum</a>), and development of high-resolution magnetically sensitive stellar models (<a href="https://github.com/soylentdeen/MoogStokes">MOOGSTOKES</a>). If users of RRISA make use of multiple of the IGRINS Team developed and maintained packages and/or models we recommend adding the following acknowledgement, which users can adapt to include the relevant tools used in their analysis of IGRINS data.</p>
+            <blockquote>
+            This paper makes use of the stellar research environment created by the University of Texas at Austin Infrared Spectroscopy Group, including the high-resolution near-infrared spectrometer IGRINS (Park et al. 2014, Mace et al. 2016 & Mace et al. 2018), the IGRINS data analysis pipeline (IGRINS PLP; Sim et al. 2014 & Kaplan et al. 2024), the IGRINS python analysis support codes (muler & gollum; Gully-Santiago et al. 2022 & Shankar et al. 2024), and the polarized stellar radiative transfer code (MOOGSTOKES; Deen 2013).
+            </blockquote>
+        </section>
+
+        <section id="PIs">
+          <h1>Recommended PI Notification</h1>
+          <p>RRISA would not be possible without the many PIs and students who dedicated significant amounts of their time and funding to observing with IGRINS over the past decade, particularly for observing programs carried out using classical observing at McDonald Observatory and the Lowell Discovery Channel Telescope. Many IGRINS PIs are repeat observers focusing years on particular target types and/or areas of the sky over their observing program(s). So, while RRISA is a publicly accessible dataset, the IGRINS Team <em><strong>recommends</strong></em> courtesy notifications to PIs when any RRISA user plans to use a large amount of a particular PI's data. We understand some IGRINS PIs are hard, if not impossible, to reach, and that not all PIs of data featured in RRISA are known, so this is not required. However, a good faith effort to contact the original PI(s) is appreciated.</p>
+        </section>
+
+        <section id="gen">
+          <h1>Recommended General Acknowledgement</h1>
+          <p>In addition to the IGRINS Team members, PIs, and observers, none of the data included in RRISA would exist without the observatory staff who cared for both the telescope and IGRINS at each observatory. If authors using RRISA would like to acknowledge all of the above in making their work possible, we recommend the following acknowledgement:</p>
+            <blockquote>
+            We are grateful to the many IGRINS Team members, PIs, observers, and observatory staff whose efforts and time spent designing, proposing, maintaining, observing, and reducing the data from IGRINS made the RRISA archive possible. Their time investment and expertise created the dataset that enabled this study.
+            </blockquote>
+        </section>
+
+      </section>
+  </div>
+</container>

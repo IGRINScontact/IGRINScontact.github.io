@@ -16,6 +16,16 @@
           </span>
         </label>
 
+        <div class='trigger'>
+            <a class="page-link" href="/About/">About</a>
+            <a class="page-link" href="/usage_agreement/">Usage Agreement</a>
+            <a class="page-link" href="/data_quality/">Important Data Notes</a>
+            <a class="page-link" href="/RRISA_raw/">The Raw</a>
+            <a class="page-link" href="/RRISA_reduced/">The Reduced</a>
+            <a class="page-link" href="/RRISA_xmatch/">The XMatch</a>
+            <a class="page-link" href="/tutorials/">Tutorials</a>
+        </div>
+        <!----
         <div class="trigger">
           {%- for path in page_paths -%}
             {%- assign my_page = site.pages | where: "path", path | first -%}
@@ -23,6 +33,7 @@
             <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
             {%- endif -%}
           {%- endfor -%}
+          ----->
         </div>
       </nav>
     {%- endif -%}
