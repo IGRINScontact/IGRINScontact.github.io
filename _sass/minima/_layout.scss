@@ -6,7 +6,7 @@
   border-bottom: 2px solid $navy-color;
   min-height: $spacing-unit * 1.865;
   background: $sky-color;
-  Text-align: center;
+  text-align: center;
 
   // Positioning context for the mobile navigation icon
   position: relative;
@@ -20,6 +20,7 @@
   margin-bottom: 0;
   margin-left: 0px;
   float: center;
+  text-align: center;
 
   &,
   &:visited {
@@ -61,7 +62,7 @@
     background-color: $background-color;
     border: 1px solid $navy-color;
     border-radius: 2px;
-    text-align: right;
+    text-align: left;
     padding-top: 0px;
 
     label[for="nav-trigger"] {
